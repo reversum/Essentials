@@ -582,8 +582,9 @@ namespace Essentials.EventHandler
 
 				if (delay > 60f)
 				{
-					Server.SendBroadcast(Config.CleanupItemsAlertBroadcast, Config.CleanupItemsBroadcastDuration);
 					yield return Timing.WaitForSeconds(delay - 60f);
+					Server.SendBroadcast(Config.CleanupItemsAlertBroadcast, Config.CleanupItemsBroadcastDuration);
+					yield return Timing.WaitForSeconds(60f);
 				}
 				else
 				{
@@ -600,7 +601,10 @@ namespace Essentials.EventHandler
 					pickup.Destroy();
 				}
 
-				Server.SendBroadcast(Config.CleanupItemsBroadcast.Replace("{itemcount}", deletedItems.ToString()), Config.CleanupItemsBroadcastDuration);
+				Server.SendBroadcast(
+					Config.CleanupItemsBroadcast.Replace("{itemcount}", deletedItems.ToString()),
+					Config.CleanupItemsBroadcastDuration
+				);
 			}
 		}
 
