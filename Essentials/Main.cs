@@ -3,6 +3,7 @@ using HarmonyLib;
 using LabApi.Events.CustomHandlers;
 using LabApi.Features;
 using LabApi.Loader.Features.Plugins;
+using MEC;
 using System;
 
 namespace Essentials
@@ -29,6 +30,21 @@ namespace Essentials
 		
 		public override void Disable()
 		{
+			if (Config.EnableAdvertMessages)
+			{
+				EssentialsEvents.timingHandle = Timing.RunCoroutine(EssentialsEvents.AdvertLoop());
+			}
+
+			if (Config.CleanupRagdolls)
+			{
+				EssentialsEvents.cleanupRagdollHandle = Timing.RunCoroutine(EssentialsEvents.CleanUpRagdolls());
+			}
+
+			if (Config.CleanupItems)
+			{
+				EssentialsEvents.cleanupItemHandle = Timing.RunCoroutine(EssentialsEvents.CleanUpItems());
+			}
+
 			CustomHandlersManager.UnregisterEventsHandler(EssentialsEvents);
 			harmony.UnpatchAll();
 		}

@@ -25,9 +25,9 @@ namespace Essentials.EventHandler
 	{
 		private Config Config;
 
-		private CoroutineHandle timingHandle;
-		private CoroutineHandle cleanupItemHandle;
-		private CoroutineHandle cleanupRagdollHandle;
+		public CoroutineHandle timingHandle;
+		public CoroutineHandle cleanupItemHandle;
+		public CoroutineHandle cleanupRagdollHandle;
 
 		private Dictionary<Player, Dictionary<RoundStatsType, uint>> RoundStats = new();
 		private Dictionary<Player, List<EffectKeeper>> PlayerEffects = new();
@@ -76,21 +76,6 @@ namespace Essentials.EventHandler
 			if (Config.EnableFriendlyFireAtRoundEnd)
 			{
 				Server.FriendlyFire = false;
-			}
-
-			if (Config.EnableAdvertMessages)
-			{
-				timingHandle = Timing.RunCoroutine(AdvertLoop());
-			}
-
-			if (Config.CleanupRagdolls)
-			{
-				cleanupRagdollHandle = Timing.RunCoroutine(CleanUpRagdolls());
-			}
-
-			if (Config.CleanupItems)
-			{
-				cleanupItemHandle = Timing.RunCoroutine(CleanUpItems());
 			}
 		}
 
